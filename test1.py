@@ -6,15 +6,16 @@ DATA_PIN = 19
 #設定BCM(GPIO引腳號)
 GREEN_PIN = 21
 GPIO.setmode(GPIO.BCM)
+GPIO.setup(GREEN_PIN,GPIO.OUT)
 
 #開啟下拉電阻
-
+GPIO.setup(DATA_PIN,GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
 #下拉電阻是把電阻接地, 所以電路段開時會得到LOW 閉合得到HIGH
 #上拉反過來, 把電阻接再3.3V ,所以電路斷開時會得到3.3V , 閉合 得到0
 
 def get_data():
     #設定信號腳位, 並回傳接收狀況, 並且設定下拉電阻
-    GPIO.setup(DATA_PIN,GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
+    
     
     return GPIO.input(DATA_PIN)
     
@@ -22,7 +23,7 @@ def get_data():
 def show_led(single):
     
     '當按鈕按下時,點燈'
-    GPIO.setup(GREEN_PIN,GPIO.OUT)
+    
     GPIO.output(GREEN_PIN,single)
 
 def close_led():
@@ -46,13 +47,8 @@ try:
             #翻轉前次狀態 0 > 1 , 1 > 0
             show_led(led_mode)
         print(f'目前led_mode={led_mode}')
-            
-
-
-        
-            
-        
-        time.sleep(0.2)
+                    
+        time.sleep(0.1)
         
         
 
